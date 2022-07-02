@@ -1,0 +1,19 @@
+{
+  "name": "fit-work-sched-be",
+  "version": "1.0.0",
+  "description": "Fitness Workout Schedule back-end",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/librown360/fit-work-sched.git"
+  },
+  "author": "Lisa Brown",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
+}
