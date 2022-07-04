@@ -1,19 +1,37 @@
-// dependecies
-const { Sequelize } = require('sequelize')
-require('dotenv').config()
+'use strict';
 
-// connect to database
-const sequelize = new Sequelize(process.env.PG_URI)
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
 
-async function connectDB() {
-    try {
-        await sequelize.authenticate()
-        console.log(`Connected to DB at ${process.env.PG_URI}`)
-    } catch (error) {
-        console.log(`Unable to connect to DB: ${error}`)
-    }
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-module.exports = {
-    connectDB
-}
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;
