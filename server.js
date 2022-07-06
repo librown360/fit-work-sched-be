@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
-// root
+// home
 app.get('/', (req, res) => {
     res.status(200).json({
         message: 'Welcome!'
@@ -17,7 +17,8 @@ app.get('/', (req, res) => {
 })
 
 // controllers
-
+const schedulesController = require('./controllers/schedules')
+app.use('/schedules', schedulesController)
 
 // start server
 app.listen(process.env.PORT, () => {

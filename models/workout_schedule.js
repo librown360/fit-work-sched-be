@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'program_schedule'
       })
       // workout association
-      Workout_Schedule.hasMany(Workout, {
+      Workout_Schedule.belongsToMany(Workout, {
         foreignKey: 'workout_id',
         as: 'workouts',
         through: WorkoutSchedule_Workout
