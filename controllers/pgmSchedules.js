@@ -1,10 +1,10 @@
 // dependencies
-const schedules = require('express').Router()
+const pgmSchedules = require('express').Router()
 const db = require('../models')
 const { Program_Schedule, Workout_Schedule, Workout } = db
 
 // GET all program schedules
-schedules.get('/', async (req, res) => {
+pgmSchedules.get('/', async (req, res) => {
     try {
         const allProgramSchedules = await Program_Schedule.findAll()
         res.status(200).json(allProgramSchedules)
@@ -14,7 +14,7 @@ schedules.get('/', async (req, res) => {
 })
 
 // GET a specific program schedule
-schedules.get('/:id', async (req, res) => {
+pgmSchedules.get('/:id', async (req, res) => {
     try {
         const oneProgramSchedule = await Program_Schedule.findOne({
             where: { id: req.params.id }
@@ -26,7 +26,7 @@ schedules.get('/:id', async (req, res) => {
 })
 
 // POST a program schedule
-schedules.post('/', async (req, res) => {
+pgmSchedules.post('/', async (req, res) => {
     try {
         const newProgramSchedule = await Program_Schedule.create(req.body)
         res.status(201).json({
@@ -39,7 +39,7 @@ schedules.post('/', async (req, res) => {
 })
 
 // PUT a program schedule
-schedules.put('/:id', async (req, res) => {
+pgmSchedules.put('/:id', async (req, res) => {
     try {
         const updateProgramSchedule = await Program_Schedule.update(req.body, {
             where: { id: req.params.id }
@@ -53,7 +53,7 @@ schedules.put('/:id', async (req, res) => {
 })
 
 // DELETE a program schedule
-schedules.delete('/:id', async (req, res) => {
+pgmSchedules.delete('/:id', async (req, res) => {
     try {
         const deleteProgramSchedule = await Program_Schedule.destroy({
             where: { id: req.params.id }
@@ -67,4 +67,4 @@ schedules.delete('/:id', async (req, res) => {
 })
 
 // export
-module.exports = schedules
+module.exports = pgmSchedules

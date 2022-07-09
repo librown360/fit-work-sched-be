@@ -38,13 +38,10 @@ module.exports = {
       program_schedule_id: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      workout_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
       }
     });
   },
+  // migration file name: 20220703204209-create-workout-schedule.js
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('workout_schedules');
   }
