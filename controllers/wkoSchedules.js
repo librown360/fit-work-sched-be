@@ -4,12 +4,12 @@ const { sequelize, Sequelize } = require('../models')
 const db = require('../models')
 const { Program_Schedule, Workout_Schedule, Workout } = db
 
-// GET workout schedules grouped by week number
-wkoSchedules.get('/:week', async (req, res) => {
+// GET workout schedule grouped by week for a specific program
+wkoSchedules.get('/:program', async (req, res) => {
     try {
         const workoutWeeks = await Workout_Schedule.findAll({
             attributes: ['week_number', 'start_date', 'end_date'],
-            where: { program_schedule_id: req.params.week },
+            where: { program_schedule_id: req.params.program },
             group: ['week_number', 'start_date', 'end_date'],
             order: sequelize.col('week_number')
         })
@@ -19,14 +19,14 @@ wkoSchedules.get('/:week', async (req, res) => {
     }
 })
 
-// GET a specific week's daily workout schedule
-wkoSchedules.get('/:week/:days', async (req, res) => {
+// GET a specific week's workout schedule for a specific program
+wkoSchedules.get('/:program/:week', async (req, res) => {
     try {
         const workoutWeek = await Workout_Schedule.findAll({
             attributes: ['day_of_week'],
             where: { 
-                program_schedule_id: req.params.week,
-                week_number: req.params.days
+                program_schedule_id: req.params.program,
+                week_number: req.params.week
             },
             include: {
                 model: Workout,
@@ -36,6 +36,29 @@ wkoSchedules.get('/:week/:days', async (req, res) => {
             }
         })
         res.status(200).json(workoutWeek)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+// GET a specific day's workout for a specific program and week
+wkoSchedules.get('/:program/:week/:day', async (req, res) => {
+    try {
+        const workoutDay = await Workout_Schedule.findAll({
+            attributes: ['day_of_week', 'notes'],
+            where: { 
+                program_schedule_id: req.params.program,
+                week_number: req.params.week,
+                day_of_week: req.params.day
+            },
+            include: {
+                model: Workout,
+                as: 'workouts',
+                through: { attributes: [] },
+                attributes: { exclude: ['id', 'program_id'] },    
+            }
+        })
+        res.status(200).json(workoutDay)
     } catch (error) {
         res.status(500).json(error)
     }
