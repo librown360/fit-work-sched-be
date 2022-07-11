@@ -1,10 +1,12 @@
 // dependencies
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 
 // config & middleware
 require('dotenv').config()
+app.use(cors({ origin: 'http://localhost:3000' }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
