@@ -4,6 +4,16 @@ const { sequelize, Sequelize } = require('../models')
 const db = require('../models')
 const { Program_Schedule, Workout_Schedule, Workout } = db
 
+// GET all workout schedules
+wkoSchedules.get('/', async (req, res) => {
+    try {
+        const allWorkoutSchedules = await Workout_Schedule.findAll({})
+        res.status(200).json(allWorkoutSchedules)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
 // GET workout schedule grouped by week for a specific program
 wkoSchedules.get('/:program', async (req, res) => {
     try {
