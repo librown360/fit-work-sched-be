@@ -18,7 +18,7 @@ wkoSchedules.get('/', async (req, res) => {
 wkoSchedules.get('/:program', async (req, res) => {
     try {
         const workoutWeeks = await Workout_Schedule.findAll({
-            attributes: ['week_number', 'start_date', 'end_date'],
+            attributes: ['id', 'week_number', 'start_date', 'end_date'],
             where: { program_schedule_id: req.params.program },
             group: ['week_number', 'start_date', 'end_date'],
             order: sequelize.col('week_number')
@@ -33,7 +33,7 @@ wkoSchedules.get('/:program', async (req, res) => {
 wkoSchedules.get('/:program/:week', async (req, res) => {
     try {
         const workoutWeek = await Workout_Schedule.findAll({
-            attributes: ['day_of_week'],
+            attributes: ['id', 'day_of_week'],
             where: { 
                 program_schedule_id: req.params.program,
                 week_number: req.params.week
@@ -42,7 +42,7 @@ wkoSchedules.get('/:program/:week', async (req, res) => {
                 model: Workout,
                 as: 'workouts',
                 through: { attributes: [] },
-                attributes: { exclude: ['id', 'program_id'] },    
+                attributes: { exclude: ['program_id'] },    
             }
         })
         res.status(200).json(workoutWeek)
@@ -55,7 +55,7 @@ wkoSchedules.get('/:program/:week', async (req, res) => {
 wkoSchedules.get('/:program/:week/:day', async (req, res) => {
     try {
         const workoutDay = await Workout_Schedule.findAll({
-            attributes: ['day_of_week', 'notes'],
+            attributes: ['id', 'day_of_week', 'notes'],
             where: { 
                 program_schedule_id: req.params.program,
                 week_number: req.params.week,
@@ -65,7 +65,7 @@ wkoSchedules.get('/:program/:week/:day', async (req, res) => {
                 model: Workout,
                 as: 'workouts',
                 through: { attributes: [] },
-                attributes: { exclude: ['id', 'program_id'] },    
+                attributes: { exclude: ['program_id'] },    
             }
         })
         res.status(200).json(workoutDay)
