@@ -20,7 +20,7 @@ wkoSchedules.get('/:program', async (req, res) => {
         const workoutWeeks = await Workout_Schedule.findAll({
             attributes: ['id', 'week_number', 'start_date', 'end_date'],
             where: { program_schedule_id: req.params.program },
-            group: ['week_number', 'start_date', 'end_date'],
+            group: ['id', 'week_number', 'start_date', 'end_date'],
             order: sequelize.col('week_number')
         })
         res.status(200).json(workoutWeeks)
