@@ -1,7 +1,7 @@
 // dependencies
 const pgmSchedules = require('express').Router()
 const db = require('../models')
-const { Program_Schedule, Workout_Schedule, Workout } = db
+const { Program_Schedule } = db
 
 // GET all program schedules
 pgmSchedules.get('/', async (req, res) => {

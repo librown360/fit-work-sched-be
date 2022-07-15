@@ -20,10 +20,10 @@ app.get('/', (req, res) => {
 
 // controllers
 const pgmSchedulesController = require('./controllers/pgmSchedules')
-app.use('/program-schedules', pgmSchedulesController)
+app.use('/schedule', pgmSchedulesController)
 
 const wkoSchedulesController = require('./controllers/wkoSchedules')
-app.use('/workout-schedules', wkoSchedulesController)
+app.use('/workout', wkoSchedulesController)
 
 // start server
 app.listen(process.env.PORT, () => {

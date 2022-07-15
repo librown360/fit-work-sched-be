@@ -4,11 +4,24 @@ const { sequelize, Sequelize } = require('../models')
 const db = require('../models')
 const { Program_Schedule, Workout_Schedule, Workout } = db
 
-// GET all workout schedules
+// GET all workouts scheduled
 wkoSchedules.get('/', async (req, res) => {
     try {
-        const allWorkoutSchedules = await Workout_Schedule.findAll({})
-        res.status(200).json(allWorkoutSchedules)
+        const allWorkoutsScheduled = await Workout_Schedule.findAll({})
+        res.status(200).json(allWorkoutsScheduled)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+// GET all workouts scheduled for a specific program schedule
+wkoSchedules.get('/:program/all', async (req, res) => {
+    try {
+        const allProgramWorkouts = await Workout_Schedule.findAll({
+            where: { program_schedule_id: req.params.program }
+            // order: sequelize.col('')
+        })
+        res.status(200).json(allProgramWorkouts)
     } catch (error) {
         res.status(500).json(error)
     }
@@ -18,9 +31,9 @@ wkoSchedules.get('/', async (req, res) => {
 wkoSchedules.get('/:program', async (req, res) => {
     try {
         const workoutWeeks = await Workout_Schedule.findAll({
-            attributes: ['id', 'week_number', 'start_date', 'end_date'],
+            attributes: ['week_number', 'start_date', 'end_date'],
             where: { program_schedule_id: req.params.program },
-            group: ['id', 'week_number', 'start_date', 'end_date'],
+            group: ['week_number', 'start_date', 'end_date'],
             order: sequelize.col('week_number')
         })
         res.status(200).json(workoutWeeks)
