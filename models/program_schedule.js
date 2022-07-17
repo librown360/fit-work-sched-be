@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
     complete: {
       type: DataTypes.BOOLEAN,
       default: false
+    },
+    new: {
+      type: DataTypes.BOOLEAN,
+      default: true
     }
   }, {
     sequelize,
