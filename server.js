@@ -25,6 +25,9 @@ app.use('/program-schedule', pgmSchedulesController)
 const wkoSchedulesController = require('./controllers/wkoSchedules')
 app.use('/workout-schedule', wkoSchedulesController)
 
+const workoutsList = require('./controllers/workoutsList')
+app.use('/workout-list', workoutsList)
+
 // start server
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
