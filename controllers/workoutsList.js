@@ -13,21 +13,18 @@ workoutsList.get('/', async (req, res) => {
     }
 })
 
-// GET all workouts by program
-workoutsList.get('/:program', async (req, res) => {
+// GET a list of all programs
+workoutsList.get('/programs', async (req, res) => {
     try {
-        const allWorkouts = await Workout.findAll({
-            where: { program_id: req.params.program },
-            order: sequelize.col('program_id')
-        })
-        res.status(200).json(allWorkouts)
+        const programList = await Program.findAll({})
+        res.status(200).json(programList)
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 // GET all workouts per program and order by program
-workoutsList.get('/:program/order', async (req, res) => {
+workoutsList.get('/:program', async (req, res) => {
     try {
         const workoutsByProgram = await Workout.findAll({
             where: { program_id: req.params.program },
