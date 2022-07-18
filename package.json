@@ -1,6 +1,9 @@
 {
   "name": "fit-work-sched-be",
   "version": "1.0.0",
+  "engines": {
+    "node": "17.5.0"
+  },
   "description": "Fitness Workout Schedule back-end",
   "main": "server.js",
   "scripts": {
