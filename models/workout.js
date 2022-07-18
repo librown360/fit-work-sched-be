@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // program association
       Workout.belongsTo(Program, {
         foreignKey: 'program_id',
-        as: 'program'
+        as: 'programs'
       })
       // workout_schedule association
       Workout.belongsToMany(Workout_Schedule, {
