@@ -35,7 +35,7 @@ app.use('/workout-list', workoutsList)
 
 // serve static front end in production mode
 if (process.env.NODE_ENV === "development") {
-    app.use(express.static(path.join(__dirname, 'client', 'build')));
+    app.use(express.static(path.join(__dirname, 'build')));
   }
 
   // Root
@@ -44,7 +44,7 @@ app.get('*', (req, res) => {
       message: 'Not Found',
     })
   })
-  
+
 // start server
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
