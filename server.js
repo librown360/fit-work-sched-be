@@ -13,7 +13,6 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-const path = require('path')
 
 
 // home
@@ -33,10 +32,6 @@ app.use('/workout-schedule', wkoSchedulesController)
 const workoutsList = require('./controllers/workoutsList')
 app.use('/workout-list', workoutsList)
 
-// serve static front end in production mode
-if (process.env.NODE_ENV === "development") {
-    app.use(express.static(path.join(__dirname, 'build')));
-  }
 
   // Root
 app.get('*', (req, res) => {
